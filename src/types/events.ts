@@ -1,10 +1,12 @@
 export interface EventsState {
-    listEvents: {id: number, date: string, title: string, description: string, image: string}[];
-    visibleEvents: {id: number, date: string, title: string, description: string, image: string}[];
+    listEvents: { id: number, date: string, title: string, description: string, image: string }[];
+    visibleEvents: { id: number, date: string, title: string, description: string, image: string }[];
+    countAddEvents: number;
 }
 
 export enum EventsActionTypes {
     FETCH_EVENTS = "FETCH_EVENTS",
+    ADD_EVENTS = "ADD_EVENTS",
 }
 
 interface FetchEventsAction {
@@ -12,4 +14,8 @@ interface FetchEventsAction {
     payload: any[],
 }
 
-export type EventsAction = FetchEventsAction;
+interface AddEventsAction {
+    type: EventsActionTypes.ADD_EVENTS,
+}
+
+export type EventsAction = FetchEventsAction | AddEventsAction;

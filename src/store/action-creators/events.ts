@@ -8,3 +8,5 @@ export const fetchEvents = () => {
         dispatch({type: EventsActionTypes.FETCH_EVENTS, payload: response.data});
     }
 }
+
+export const addEvents = () => ({type: EventsActionTypes.ADD_EVENTS});
