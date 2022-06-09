@@ -7,6 +7,7 @@ export interface EventsState {
 export enum EventsActionTypes {
     FETCH_EVENTS = "FETCH_EVENTS",
     ADD_EVENTS = "ADD_EVENTS",
+    DELETE_EVENT = "DELETE_EVENT",
 }
 
 interface FetchEventsAction {
@@ -18,4 +19,9 @@ interface AddEventsAction {
     type: EventsActionTypes.ADD_EVENTS,
 }
 
-export type EventsAction = FetchEventsAction | AddEventsAction;
+interface DeleteEventsAction {
+    type: EventsActionTypes.DELETE_EVENT,
+    payload: number,
+}
+
+export type EventsAction = FetchEventsAction | AddEventsAction | DeleteEventsAction;

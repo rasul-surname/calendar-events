@@ -1,4 +1,5 @@
 import React from "react";
+import {DeleteOutlined} from "@ant-design/icons/lib";
 import classes from './EventItem.module.css';
 
 interface InterfaceEventItem {
@@ -6,10 +7,11 @@ interface InterfaceEventItem {
     image: string;
     title: string;
     description: string;
+    removeEvent: () => any;
 }
 
-
-const EventItem: React.FC<InterfaceEventItem> = ({id, image, title, description}) => {
+const EventItem: React.FC<InterfaceEventItem> = (props) => {
+    const {id, image, title, description, removeEvent} = props;
 
     function limitStr(str: string, wordCount: number) {
         return str.split(' ').slice(0, wordCount).join(' ') + '...';
@@ -17,10 +19,16 @@ const EventItem: React.FC<InterfaceEventItem> = ({id, image, title, description}
 
     return (
         <div className={classes.card} key={id}>
-            <img className={classes.card__img} src={image} alt=""/>
             <div>
-                <p className={classes.card__title}>{title}</p>
-                <p className={classes.card__desc}>{limitStr(description, 5)}</p>
+                <img className={classes.card__img} src={image} alt=""/>
+                <div>
+                    <p className={classes.card__title}>{title}</p>
+                    <p className={classes.card__desc}>{limitStr(description, 5)}</p>
+                </div>
+            </div>
+            <div>
+                <DeleteOutlined  className={classes.card__delete__icon} />
+                <p className={classes.card__delete__text} onClick={removeEvent}>Удалить</p>
             </div>
         </div>
     )

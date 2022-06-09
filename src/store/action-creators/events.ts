@@ -10,3 +10,4 @@ export const fetchEvents = () => {
 }
 
 export const addEvents = () => ({type: EventsActionTypes.ADD_EVENTS});
+export const deleteEvent = (id: number) => ({type: EventsActionTypes.DELETE_EVENT, payload: id});

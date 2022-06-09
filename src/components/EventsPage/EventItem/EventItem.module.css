@@ -2,9 +2,15 @@
     max-width: 856px;
 
     display: flex;
+    justify-content: space-between;
 
     padding: 13px 0px;
     margin: 0 auto;
+}
+
+.card > div {
+    display: flex;
+    align-items: center;
 }
 
 .card:not(:first-child) {
@@ -26,4 +32,22 @@
 
 .card__desc {
     color: rgba(66, 66, 66, 0.45);
+}
+
+.card__delete__icon {
+    display: none;
+}
+
+.card__delete__text {
+    color: #1890FF;
+}
+
+@media (max-width: 599px) {
+    .card__delete__icon {
+        display: block;
+    }
+
+    .card__delete__text {
+        display: none;
+    }
 }

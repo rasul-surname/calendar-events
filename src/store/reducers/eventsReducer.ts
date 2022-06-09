@@ -19,6 +19,16 @@ export const eventsReducer = (state = initialState, action: EventsAction): Event
                 ...state,
                 visibleEvents: state.listEvents.slice(0, state.visibleEvents.length + state.countAddEvents)
             }
+        case EventsActionTypes.DELETE_EVENT:
+            return {
+                ...state,
+                listEvents: state.listEvents.filter((elem) => {
+                    return elem.id !== action.payload;
+                }),
+                visibleEvents: state.visibleEvents.filter((elem) => {
+                    return elem.id !== action.payload;
+                })
+            }
         default:
             return state;
     }
