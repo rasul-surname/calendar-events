@@ -1,56 +1,28 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../store/hooks/useTypedSelector";
-import {fetchEvents, addEvents, deleteEvent} from "../../store/action-creators/events";
-
-import {DownloadOutlined} from "@ant-design/icons/lib";
-import {Button} from "antd";
-
-import EventItem from "./EventItem/EventItem";
+import {fetchEvents} from "../../store/action-creators/events";
+import EventsItem from "./EventsItem/EventsItem";
 import classes from './EventsPage.module.css';
 
 const EventsPage = () => {
-    const {visibleEvents} = useTypedSelector(state => state.events);
+    const {listEvents} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
     useEffect(() => {
         // @ts-ignore
-        if (visibleEvents.length === 0) dispatch(fetchEvents());
+        if (listEvents.length === 0) dispatch(fetchEvents());
     }, []);
 
     return (
-        <>
-            {visibleEvents.map((elem) => {
+        <div className={classes.cards}>
+            {listEvents.map((event) => {
                 return (
-                    <EventItem
-                        id={elem.id}
-                        image={elem.image}
-                        title={elem.title}
-                        description={elem.description}
-                        removeEvent={() => removeEvent(elem.id)}
-                    />
+                    <EventsItem id={event.id} title={event.title} image={event.image} date={event.date} />
                 )
             })}
-            <Button
-                className={classes.btn}
-                onClick={downloadEvents}
-                type="primary"
-                shape="round"
-                icon={<DownloadOutlined/>}
-                size="large"
-            >
-                Загрузить больше
-            </Button>
-        </>
+        </div>
     )
-
-    function removeEvent(id: number) {
-        dispatch(deleteEvent(id));
-    }
-
-    function downloadEvents() {
-        dispatch(addEvents());
-    }
 }
 
 export default EventsPage;

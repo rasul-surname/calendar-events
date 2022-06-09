@@ -1,25 +1,34 @@
 import React from "react";
+import {DeleteOutlined} from "@ant-design/icons/lib";
 import classes from './CalendarItem.module.css';
 
-interface InterfaceCalendarItem {
+interface InterfaceEventItem {
     id: number;
-    title: string;
     image: string;
-    date: string;
+    title: string;
+    description: string;
+    removeEvent: () => any;
 }
 
-const CalendarItem: React.FC<InterfaceCalendarItem> = (props) => {
-    const {id, title, image, date} = props;
+const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
+    const {id, image, title, description, removeEvent} = props;
+
+    function limitStr(str: string, wordCount: number) {
+        return str.split(' ').slice(0, wordCount).join(' ') + '...';
+    }
 
     return (
         <div className={classes.card} key={id}>
             <div>
-                <p className={classes.card__text__title}>{title}</p>
-                <p className={classes.card__text__more}>Больше</p>
+                <img className={classes.card__img} src={image} alt=""/>
+                <div>
+                    <p className={classes.card__title}>{title}</p>
+                    <p className={classes.card__desc}>{limitStr(description, 5)}</p>
+                </div>
             </div>
-            <img src={image} alt=""/>
             <div>
-                <p className={classes.card__text__date}>{date}</p>
+                <DeleteOutlined  className={classes.card__delete__icon} />
+                <p className={classes.card__delete__text} onClick={removeEvent}>Удалить</p>
             </div>
         </div>
     )
