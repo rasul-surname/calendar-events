@@ -1,5 +1,6 @@
 export interface EventsState {
-    listEvents: any[];
+    listEvents: {id: number, date: string, title: string, description: string, image: string}[];
+    visibleEvents: {id: number, date: string, title: string, description: string, image: string}[];
 }
 
 export enum EventsActionTypes {

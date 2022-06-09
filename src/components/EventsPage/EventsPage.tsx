@@ -5,17 +5,18 @@ import {fetchEvents} from "../../store/action-creators/events";
 import EventItem from "./EventItem/EventItem";
 
 const EventsPage = () => {
-    const {listEvents} = useTypedSelector(state => state.events);
+    const {visibleEvents} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log(visibleEvents)
         // @ts-ignore
-        if (!listEvents) dispatch(fetchEvents());
+        if (visibleEvents.length === 0) dispatch(fetchEvents());
     }, [])
 
     return (
         <>
-            {listEvents.map((elem) => {
+            {visibleEvents.map((elem) => {
                 return (
                     <EventItem id={elem.id} image={elem.image} title={elem.title} description={elem.description}/>
                 )
