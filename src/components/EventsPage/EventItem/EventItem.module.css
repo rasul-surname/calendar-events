@@ -17,3 +17,11 @@
 
     border-radius: 50%;
 }
+
+.card__title {
+    font-weight: 500;
+}
+
+.card__desc {
+    color: rgba(66, 66, 66, 0.45);
+}
