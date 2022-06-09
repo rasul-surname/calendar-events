@@ -1,0 +1,19 @@
+.card {
+    width: 856px;
+
+    display: flex;
+
+    padding: 13px 0px;
+    margin: 0 auto;
+
+    border-bottom: 1px solid #E7E7E7;
+}
+
+.card__img {
+    width: 38px;
+    height: 38px;
+
+    margin-right: 17px;
+
+    border-radius: 50%;
+}
