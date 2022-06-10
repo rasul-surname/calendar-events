@@ -9,12 +9,12 @@ import SelectedPage from "./components/SelectedPage/SelectedPage";
 function App() {
     return (
         <div>
-            <Header/>
             <div className="content">
+                <Header/>
                 <Routes>
                     <Route path="/events" element={<EventsPage/>}/>
                     <Route path="/calendar" element={<CalendarPage/>}/>
-                    <Route path="/events/:id" element={<SelectedPage />}/>
+                    <Route path="/events/:id" element={<SelectedPage/>}/>
                 </Routes>
             </div>
         </div>

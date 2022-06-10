@@ -19,7 +19,7 @@ const CalendarPage = () => {
     }, []);
 
     return (
-        <>
+        <div className={classes.cards}>
             {visibleEvents.map((elem) => {
                 return (
                     <CalendarItem
@@ -32,7 +32,7 @@ const CalendarPage = () => {
                 )
             })}
             <Button
-                className={classes.btn}
+                className={classes.cards__btn}
                 onClick={downloadEvents}
                 type="primary"
                 shape="round"
@@ -41,7 +41,7 @@ const CalendarPage = () => {
             >
                 Загрузить больше
             </Button>
-        </>
+        </div>
     )
 
     function removeEvent(id: number) {

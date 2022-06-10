@@ -1,4 +1,9 @@
-.btn {
+.cards {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.cards__btn {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
