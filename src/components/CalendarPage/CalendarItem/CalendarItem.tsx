@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import {DeleteOutlined} from "@ant-design/icons/lib";
 import classes from './CalendarItem.module.css';
 
@@ -18,19 +19,21 @@ const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
     }
 
     return (
-        <div className={classes.card} key={id}>
-            <div>
-                <img className={classes.card__img} src={image} alt=""/>
+        <Link to={`/events/${(id)}`}>
+            <div className={classes.card} key={id}>
                 <div>
-                    <p className={classes.card__title}>{title}</p>
-                    <p className={classes.card__desc}>{limitStr(description, 5)}</p>
+                    <img className={classes.card__img} src={image} alt=""/>
+                    <div>
+                        <p className={classes.card__title}>{title}</p>
+                        <p className={classes.card__desc}>{limitStr(description, 5)}</p>
+                    </div>
+                </div>
+                <div>
+                    <DeleteOutlined className={classes.card__delete__icon}/>
+                    <p className={classes.card__delete__text} onClick={removeEvent}>Удалить</p>
                 </div>
             </div>
-            <div>
-                <DeleteOutlined  className={classes.card__delete__icon} />
-                <p className={classes.card__delete__text} onClick={removeEvent}>Удалить</p>
-            </div>
-        </div>
+        </Link>
     )
 }
 
