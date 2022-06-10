@@ -1,0 +1,7 @@
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto 25px;
+
+    display: flex;
+    justify-content: flex-end;
+}

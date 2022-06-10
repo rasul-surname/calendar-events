@@ -6,21 +6,23 @@ import EventsItem from "./EventsItem/EventsItem";
 import classes from './EventsPage.module.css';
 
 const EventsPage = () => {
-    const {listEvents} = useTypedSelector(state => state.events);
+    const {visibleEvents, listEvents} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
     useEffect(() => {
         // @ts-ignore
         if (listEvents.length === 0) dispatch(fetchEvents());
-    }, []);
+    }, [visibleEvents]);
 
     return (
-        <div className={classes.cards}>
-            {listEvents.map((event) => {
-                return (
-                    <EventsItem id={event.id} title={event.title} image={event.image} date={event.date} />
-                )
-            })}
+        <div>
+            <div className={classes.cards}>
+                {visibleEvents.map((event) => {
+                    return (
+                        <EventsItem id={event.id} title={event.title} image={event.image} date={event.date} />
+                    )
+                })}
+            </div>
         </div>
     )
 }

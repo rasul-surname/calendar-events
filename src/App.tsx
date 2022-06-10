@@ -5,12 +5,14 @@ import Header from "./components/Header/Header";
 import EventsPage from "./components/EventsPage/EventsPage";
 import CalendarPage from "./components/CalendarPage/CalendarPage";
 import SelectedPage from "./components/SelectedPage/SelectedPage";
+import SelectedFilter from "./components/SelectedFitler/SelectedFilter";
 
 function App() {
     return (
         <div>
             <div className="content">
                 <Header/>
+                <SelectedFilter />
                 <Routes>
                     <Route path="/events" element={<EventsPage/>}/>
                     <Route path="/calendar" element={<CalendarPage/>}/>

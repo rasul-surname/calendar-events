@@ -9,7 +9,7 @@ const SelectedPage = () => {
 
     return (
         <div className={classes.cards}>
-            {listEvents.slice(id, Number(id) + 1).map((event: any, index: number) => {
+            {listEvents.slice(id, Number(id) + 1).map((event: any) => {
                 return (
                     <SelectedItem
                         id={id}
