@@ -2,6 +2,8 @@ export interface EventsState {
     listEvents: { id: number, date: string, title: string, description: string, image: string }[];
     visibleEvents: { id: number, date: string, title: string, description: string, image: string }[];
     countAddEvents: number;
+    recorderEvents: { id: number, date: string, title: string, description: string, image: string }[];
+    recorderEventsID: number[];
 }
 
 export enum EventsActionTypes {
@@ -9,6 +11,8 @@ export enum EventsActionTypes {
     ADD_EVENTS = "ADD_EVENTS",
     DELETE_EVENT = "DELETE_EVENT",
     SHOW_EVENTS = "SHOW_EVENTS",
+    SIGN_UP_EVENT = "SIGN_UP_EVENT",
+    LOG_OUT_EVENT = "LOG_OUT_EVENT",
 }
 
 interface FetchEventsAction {
@@ -30,4 +34,20 @@ interface ShowEventsAction {
     payload: string,
 }
 
-export type EventsAction = FetchEventsAction | AddEventsAction | DeleteEventsAction | ShowEventsAction;
+interface SignUpEventsAction {
+    type: EventsActionTypes.SIGN_UP_EVENT,
+    payload: number,
+}
+
+interface LogOutEventsAction {
+    type: EventsActionTypes.LOG_OUT_EVENT,
+    payload: number,
+}
+
+export type EventsAction =
+    FetchEventsAction
+    | AddEventsAction
+    | DeleteEventsAction
+    | ShowEventsAction
+    | SignUpEventsAction
+    | LogOutEventsAction;

@@ -11,4 +11,6 @@ export const fetchEvents = () => {
 
 export const addEvents = () => ({type: EventsActionTypes.ADD_EVENTS});
 export const deleteEvent = (id: number) => ({type: EventsActionTypes.DELETE_EVENT, payload: id});
-export const showEvents = (date: string) => ({type: EventsActionTypes.SHOW_EVENTS, payload: date})
+export const showEvents = (date: string) => ({type: EventsActionTypes.SHOW_EVENTS, payload: date});
+export const signUpEvent = (id: number) => ({type: EventsActionTypes.SIGN_UP_EVENT, payload: id});
+export const logOutEvent = (id: number) => ({type: EventsActionTypes.LOG_OUT_EVENT, payload: id});

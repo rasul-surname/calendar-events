@@ -9,10 +9,13 @@ interface InterfaceSelectedItem {
     title: string;
     date: string;
     description: string;
+    subscribeEvent: (id: number) => any;
+    unSubscribeEvent: (id: number) => any;
+    recorderEventsID: number[];
 }
 
 const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
-    const {id, image, title, date, description} = props;
+    const {id, image, title, date, description, subscribeEvent, unSubscribeEvent, recorderEventsID} = props;
 
     return (
         <div key={id}>
@@ -29,9 +32,18 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
                         </div>
                     </div>
                     <div className={classes.card__btn}>
-                        <Button type="primary" shape="round" icon={<RightOutlined/>} size="large">
-                            Записаться
-                        </Button>
+                        {recorderEventsID.includes(+id)
+                            ?
+                            <Button onClick={() => unSubscribeEvent(+id)} type="primary" shape="round"
+                                    size="large" danger>
+                                Отписаться
+                            </Button>
+                            :
+                            <Button onClick={() => subscribeEvent(+id)} type="primary" shape="round" icon={<RightOutlined/>}
+                                    size="large">
+                                Записаться
+                            </Button>
+                        }
                     </div>
                 </div>
             </div>

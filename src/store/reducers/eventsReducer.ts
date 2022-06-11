@@ -1,11 +1,16 @@
 import {EventsAction, EventsActionTypes, EventsState} from "../../types/events";
 import {formatDate} from "../../utils/formatDate";
 import {getMonthYear} from "../../utils/getMonthYear";
+import {getLogOutEvents} from "../../utils/getLogOutEvents";
+import {getLogOutEventsById} from "../../utils/getLogOutEventsById";
+import {getSignUpEventsByID} from "../../utils/getSignUpEventsByID";
 
 const initialState: EventsState = {
     listEvents: [],
     visibleEvents: [],
     countAddEvents: 3,
+    recorderEvents: [],
+    recorderEventsID: [],
 }
 
 export const eventsReducer = (state = initialState, action: EventsAction): EventsState => {
@@ -19,33 +24,48 @@ export const eventsReducer = (state = initialState, action: EventsAction): Event
             return {
                 ...state,
                 listEvents: payloadList,
-                visibleEvents: payloadList.slice(0, state.countAddEvents)
+                visibleEvents: payloadList,
             };
         case EventsActionTypes.ADD_EVENTS:
             return {
                 ...state,
-                visibleEvents: state.listEvents.slice(0, state.visibleEvents.length + state.countAddEvents)
+                countAddEvents: state.countAddEvents + state.countAddEvents,
             }
         case EventsActionTypes.DELETE_EVENT:
+            let filterEvents = state.listEvents.filter((elem) => {
+                return elem.id !== action.payload;
+            })
+
             return {
                 ...state,
-                listEvents: state.listEvents.filter((elem) => {
-                    return elem.id !== action.payload;
-                }),
-                visibleEvents: state.visibleEvents.filter((elem) => {
+                listEvents: filterEvents,
+                visibleEvents: filterEvents,
+                recorderEvents: state.recorderEvents.filter((elem) => {
                     return elem.id !== action.payload;
                 })
             }
         case EventsActionTypes.SHOW_EVENTS:
-            let filterEvents = state.listEvents.filter((event) => {
-                if(getMonthYear(event.date) === action.payload) {
+            let filterEventsDate = state.listEvents.filter((event) => {
+                if (getMonthYear(event.date) === action.payload) {
                     return true;
                 }
             });
 
             return {
                 ...state,
-                visibleEvents: filterEvents
+                visibleEvents: filterEventsDate
+            }
+        case EventsActionTypes.SIGN_UP_EVENT:
+            return {
+                ...state,
+                recorderEvents: [...state.recorderEvents, ...getSignUpEventsByID(state.listEvents, action.payload)],
+                recorderEventsID: [...state.recorderEventsID, ...getSignUpEventsByID(state.listEvents, action.payload).map(event => event.id)]
+            }
+        case EventsActionTypes.LOG_OUT_EVENT:
+            return {
+                ...state,
+                recorderEvents: getLogOutEvents(state.recorderEvents, action.payload),
+                recorderEventsID: getLogOutEventsById(state.recorderEventsID, action.payload)
             }
         default:
             return state;

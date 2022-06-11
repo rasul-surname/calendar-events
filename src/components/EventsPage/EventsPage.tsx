@@ -12,14 +12,15 @@ const EventsPage = () => {
     useEffect(() => {
         // @ts-ignore
         if (listEvents.length === 0) dispatch(fetchEvents());
-    }, [visibleEvents]);
+    }, [listEvents, visibleEvents]);
 
     return (
         <div>
             <div className={classes.cards}>
                 {visibleEvents.map((event) => {
                     return (
-                        <EventsItem id={event.id} title={event.title} image={event.image} date={event.date} />
+                        <EventsItem key={event.id} id={event.id} title={event.title} image={event.image}
+                                    date={event.date}/>
                     )
                 })}
             </div>

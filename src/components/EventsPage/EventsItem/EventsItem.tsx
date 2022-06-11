@@ -14,7 +14,7 @@ const EventsItem: React.FC<InterfaceCalendarItem> = (props) => {
 
     return (
         <Link to={`/events/${(id)}`}>
-            <div className={classes.card} key={id}>
+            <div className={classes.card}>
                 <div>
                     <p className={classes.card__text__title}>{title}</p>
                     <p className={classes.card__text__more}>Больше</p>
