@@ -18,7 +18,7 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
     const {id, image, title, date, description, subscribeEvent, unSubscribeEvent, recorderEventsID} = props;
 
     return (
-        <div key={id}>
+        <>
             <div className={classes.card__row}>
                 <img className={classes.card__img} src={image} alt={title}/>
                 <div className={classes.card__right}>
@@ -51,7 +51,7 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
                 <p>Посетители</p>
                 <p>пока никто не записан</p>
             </div>
-        </div>
+        </>
 
     )
 }

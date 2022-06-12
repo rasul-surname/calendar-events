@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 
-import {showEvents} from "../../store/action-creators/events";
+import {showAllEvents, showFilteredEvents} from "../../store/action-creators/events";
 import {DatePicker, DatePickerProps} from "antd";
 import moment from "moment";
 
@@ -11,8 +11,12 @@ const SelectedFilter = () => {
     const dispatch = useDispatch();
 
     const onChange: DatePickerProps['onChange'] = (date) => {
-        const monthYear = moment(date, 'MM.YYYY').locale('ru').format('MM.YYYY');
-        dispatch(showEvents(monthYear));
+        if(date !== null) {
+            const monthYear = moment(date, 'MM.YYYY').locale('ru').format('MM.YYYY');
+            dispatch(showFilteredEvents(monthYear));
+        } else {
+            dispatch(showAllEvents());
+        }
     };
 
     return (

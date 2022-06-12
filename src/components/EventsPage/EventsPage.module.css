@@ -1,7 +1,9 @@
-.cards {
+.wrapper {
     max-width: 900px;
     margin: 0 auto;
+}
 
+.cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 40px;

@@ -10,6 +10,7 @@ const SelectedPage = () => {
     const {listEvents, visibleEvents, recorderEventsID} = useTypedSelector(state => state.events);
     const {id} = useParams<{ id: any }>();
     const dispatch = useDispatch();
+    const currentEvent = visibleEvents.find((elem) => elem.id == id);
 
     useEffect(() => {
         // @ts-ignore
@@ -18,20 +19,20 @@ const SelectedPage = () => {
 
     return (
         <div className={classes.cards}>
-            {visibleEvents.slice(id, Number(id) + 1).map((event: any) => {
-                return (
-                    <SelectedItem
-                        id={id}
-                        image={event.image}
-                        title={event.title}
-                        date={event.date}
-                        description={event.description}
-                        subscribeEvent={subscribeEvent}
-                        unSubscribeEvent={unSubscribeEvent}
-                        recorderEventsID={recorderEventsID}
-                    />
-                )
-            })}
+            {currentEvent !== undefined ?
+                <SelectedItem
+                    id={currentEvent.id}
+                    image={currentEvent.image}
+                    title={currentEvent.title}
+                    date={currentEvent.date}
+                    description={currentEvent.description}
+                    subscribeEvent={subscribeEvent}
+                    unSubscribeEvent={unSubscribeEvent}
+                    recorderEventsID={recorderEventsID}
+                />
+                :
+                'Такой страницы не существует'
+            }
         </div>
     )
 

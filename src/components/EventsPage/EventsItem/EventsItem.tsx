@@ -13,18 +13,19 @@ const EventsItem: React.FC<InterfaceCalendarItem> = (props) => {
     const {id, title, image, date} = props;
 
     return (
-        <Link to={`/events/${(id)}`}>
-            <div className={classes.card}>
-                <div>
-                    <p className={classes.card__text__title}>{title}</p>
+
+        <div className={classes.card}>
+            <div>
+                <p className={classes.card__text__title}>{title}</p>
+                <Link to={`/events/${(id)}`}>
                     <p className={classes.card__text__more}>Больше</p>
-                </div>
-                <img src={image} alt=""/>
-                <div>
-                    <p className={classes.card__text__date}>{date}</p>
-                </div>
+                </Link>
             </div>
-        </Link>
+            <img src={image} alt=""/>
+            <div>
+                <p className={classes.card__text__date}>{date}</p>
+            </div>
+        </div>
     )
 }
 
