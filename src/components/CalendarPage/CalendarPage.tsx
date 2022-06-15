@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../store/hooks/useTypedSelector";
-import {addEvents, deleteEvent} from "../../store/action-creators/events";
+import {addEvents} from "../../store/action-creators/events";
 
 import {DownloadOutlined} from "@ant-design/icons/lib";
 import {Button} from "antd";
@@ -12,17 +12,20 @@ import CalendarItem from "./CalendarItem/CalendarItem";
 import classes from './CalendarPage.module.css';
 
 const CalendarPage = () => {
-    const { listEvents ,recorderEvents, countAddEvents} = useTypedSelector(state => state.events);
+    const {allListEvents, recordedEvents, eventsVisibleCalendar} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
+    // Количество видимых событий до нажатия на кнопку
+    const eventsShow = recordedEvents.slice(0, eventsVisibleCalendar);
+
     useEffect(() => {
-    }, [listEvents, recorderEvents, countAddEvents]);
+    }, [allListEvents, recordedEvents, eventsVisibleCalendar]);
 
     return (
         <div className={classes.wrapper}>
-            <SelectedFilter />
+            <SelectedFilter/>
             <div>
-                {recorderEvents.slice(0, countAddEvents).map((elem) => {
+                {eventsShow.map((elem) => {
                     return (
                         <CalendarItem
                             key={elem.id}
@@ -30,12 +33,12 @@ const CalendarPage = () => {
                             image={elem.image}
                             title={elem.title}
                             description={elem.description}
-                            removeEvent={(event: any) => removeEvent(elem.id, event)}
                         />
                     )
                 })}
-                {recorderEvents.length > 3 && recorderEvents.slice(0, countAddEvents).length !== recorderEvents.length
-                    ?
+                {
+                    (recordedEvents.length > 3 && eventsShow.length !== recordedEvents.length)
+                    &&
                     <Button
                         className={classes.cards__btn}
                         onClick={downloadEvents}
@@ -46,17 +49,10 @@ const CalendarPage = () => {
                     >
                         Загрузить больше
                     </Button>
-                    :
-                    ''
                 }
             </div>
         </div>
     )
-
-    function removeEvent(id: number, event: any) {
-        event.preventDefault();
-        dispatch(deleteEvent(id));
-    }
 
     function downloadEvents() {
         dispatch(addEvents());

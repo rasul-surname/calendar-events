@@ -1,21 +1,20 @@
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../store/hooks/useTypedSelector";
 import {fetchEvents, logOutEvent, signUpEvent} from "../../store/action-creators/events";
 import SelectedItem from "./SelectedItem/SelectedItem";
 import classes from './SelectedPage.module.css';
 
 const SelectedPage = () => {
-    const {listEvents, visibleEvents, recorderEventsID} = useTypedSelector(state => state.events);
-    const {id} = useParams<{ id: any }>();
+    const {allListEvents, visibleEvents, recordedEventsID} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
-    const currentEvent = visibleEvents.find((elem) => elem.id == id);
+    const {id} = useParams<{ id: any }>();
+    const currentEvent = visibleEvents.find(elem => elem.id == id);
 
     useEffect(() => {
-        // @ts-ignore
-        if (listEvents.length === 0) dispatch(fetchEvents());
-    }, [listEvents, visibleEvents, recorderEventsID])
+        if (allListEvents.length === 0) dispatch(fetchEvents());
+    }, [allListEvents, visibleEvents, recordedEventsID])
 
     return (
         <div className={classes.cards}>
@@ -26,9 +25,11 @@ const SelectedPage = () => {
                     title={currentEvent.title}
                     date={currentEvent.date}
                     description={currentEvent.description}
+                    name={currentEvent.name}
+                    surname={currentEvent.surname}
                     subscribeEvent={subscribeEvent}
                     unSubscribeEvent={unSubscribeEvent}
-                    recorderEventsID={recorderEventsID}
+                    recorderEventsID={recordedEventsID}
                 />
                 :
                 'Такой страницы не существует'
@@ -36,8 +37,8 @@ const SelectedPage = () => {
         </div>
     )
 
-    function subscribeEvent(id: number) {
-        dispatch(signUpEvent(id));
+    function subscribeEvent(id: number, firstName: string, lastName: string) {
+        dispatch(signUpEvent(id, firstName, lastName));
     }
 
     function unSubscribeEvent(id: number) {

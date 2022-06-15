@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../store/hooks/useTypedSelector";
@@ -9,19 +9,18 @@ import EventsItem from "./EventsItem/EventsItem";
 import classes from './EventsPage.module.css';
 
 const EventsPage = () => {
-    const {visibleEvents, listEvents} = useTypedSelector(state => state.events);
+    const {visibleEvents, allListEvents} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // @ts-ignore
-        if (listEvents.length === 0) dispatch(fetchEvents());
-    }, [listEvents, visibleEvents]);
+        if (allListEvents.length === 0) dispatch(fetchEvents());
+    }, [allListEvents, visibleEvents]);
 
     return (
         <div className={classes.wrapper}>
             <SelectedFilter/>
             <div className={classes.cards}>
-                {visibleEvents.map((event) => {
+                {visibleEvents.map(event => {
                     return (
                         <EventsItem
                             key={event.id}

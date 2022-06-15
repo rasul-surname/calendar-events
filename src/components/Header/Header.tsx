@@ -1,4 +1,3 @@
-import React from "react";
 import {NavLink} from "react-router-dom";
 
 import {AppstoreOutlined} from "@ant-design/icons";
@@ -11,7 +10,7 @@ const Header = () => {
     return (
         <header className={classes.wrapper}>
             <NavLink
-                to="/events-calendar"
+                to="/events-calendar/events"
                 className={({isActive}) => isActive ? classes.link + ' ' + classes.active : classes.link}
             >
                 <AppstoreOutlined/>

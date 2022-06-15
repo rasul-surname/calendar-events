@@ -5,79 +5,86 @@ import {getFilterEventsByDate} from "../../utils/events/filteredEventsDate";
 import {convertPayload} from "../../utils/events/convertPayload";
 import {getEventsWithoutId} from "../../utils/events/getEventsWithoutId";
 import {getEventsById} from "../../utils/events/getEventsById";
+import {replaceEventsById} from "../../utils/events/replaceEventsById";
 
 const initialState: EventsState = {
-    listEvents: [],
+    allListEvents: [],
     visibleEvents: [],
-    countAddEvents: 3,
-    recorderEvents: [],
-    recorderEventsID: [],
-    listRecorderEvents: [],
+    eventsVisibleCalendar: 3,
+    allRecordedEvents: [],
+    recordedEvents: [],
+    recordedEventsID: [],
 }
 
 export const eventsReducer = (state = initialState, action: EventsAction): EventsState => {
+    let replaceEvents;
+
     switch (action.type) {
         case EventsActionTypes.FETCH_EVENTS:
-            const payloadList = convertPayload(action.payload);
+            const convertedPayload = convertPayload(action.payload);
 
             return {
                 ...state,
-                listEvents: payloadList,
-                visibleEvents: payloadList,
+                allListEvents: convertedPayload,
+                visibleEvents: convertedPayload,
             };
 
         case EventsActionTypes.ADD_EVENTS:
             return {
                 ...state,
-                countAddEvents: state.countAddEvents + state.countAddEvents,
+                eventsVisibleCalendar: state.eventsVisibleCalendar + state.eventsVisibleCalendar,
             }
 
         case EventsActionTypes.DELETE_EVENT:
-            const filterListEventsWithoutId = getEventsWithoutId(state.listEvents, action.payload);
+            replaceEvents = replaceEventsById(state.allListEvents, action.payload, "", "");
 
             return {
                 ...state,
-                listEvents: filterListEventsWithoutId,
-                visibleEvents: filterListEventsWithoutId,
-                recorderEvents: getEventsWithoutId(state.recorderEvents, action.payload),
-                recorderEventsID: state.recorderEventsID.filter((elem) => {
-                    return elem !== action.payload;
-                }),
-                listRecorderEvents: getEventsWithoutId(state.recorderEvents, action.payload),
+                allListEvents: [...replaceEvents],
+                visibleEvents: [...replaceEvents],
+                recordedEvents: getEventsWithoutId(state.recordedEvents, action.payload),
+                recordedEventsID: state.recordedEventsID.filter(idEvent => idEvent !== action.payload),
+                allRecordedEvents: getEventsWithoutId(state.recordedEvents, action.payload),
             }
 
         case EventsActionTypes.SHOW_FILTERED_EVENTS:
             return {
                 ...state,
-                visibleEvents: getFilterEventsByDate(state.listEvents, action.payload),
-                recorderEvents: getFilterEventsByDate(state.recorderEvents, action.payload)
+                visibleEvents: getFilterEventsByDate(state.allListEvents, action.payload),
+                recordedEvents: getFilterEventsByDate(state.recordedEvents, action.payload)
             }
 
         case EventsActionTypes.SHOW_ALL_EVENTS:
             return {
                 ...state,
-                visibleEvents: state.listEvents,
-                recorderEvents: state.listRecorderEvents,
+                visibleEvents: state.allListEvents,
+                recordedEvents: state.allRecordedEvents,
             }
 
         case EventsActionTypes.SIGN_UP_EVENT:
-            const filterListEventsById = getEventsById(state.listEvents, action.payload);
+            const filterListEventsById = getEventsById(state.allListEvents, action.payload.id);
+            replaceEvents = replaceEventsById(state.allListEvents, action.payload.id, action.payload.name, action.payload.surname);
 
             return {
                 ...state,
-                recorderEvents: [...state.recorderEvents, ...filterListEventsById],
-                recorderEventsID: [...state.recorderEventsID, ...filterListEventsById.map(event => event.id)],
-                listRecorderEvents: [...state.recorderEvents, ...filterListEventsById]
+                allListEvents: [...replaceEvents],
+                visibleEvents: [...replaceEvents],
+                recordedEvents: [...state.recordedEvents, ...filterListEventsById],
+                recordedEventsID: [...state.recordedEventsID, ...filterListEventsById.map(event => event.id)],
+                allRecordedEvents: [...state.recordedEvents, ...filterListEventsById]
             }
 
         case EventsActionTypes.LOG_OUT_EVENT:
-            const filterRecorderEvents = getEventsWithoutId(state.recorderEvents, action.payload);
+            const filterRecorderEvents = getEventsWithoutId(state.recordedEvents, action.payload);
+            replaceEvents = replaceEventsById(state.allListEvents, action.payload, "", "");
 
             return {
                 ...state,
-                recorderEvents: filterRecorderEvents,
-                recorderEventsID: getLogOutEventsById(state.recorderEventsID, action.payload),
-                listRecorderEvents: filterRecorderEvents
+                allListEvents: [...replaceEvents],
+                visibleEvents: [...replaceEvents],
+                recordedEvents: filterRecorderEvents,
+                recordedEventsID: getLogOutEventsById(state.recordedEventsID, action.payload),
+                allRecordedEvents: filterRecorderEvents
             }
 
         default:

@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
-import {DeleteOutlined} from "@ant-design/icons/lib";
+
+import {deleteEvent} from "../../../store/action-creators/events";
+import {limitStr} from "../../../utils/limitStr";
+
+import {DeleteOutlined, ExclamationCircleOutlined} from "@ant-design/icons/lib";
+
+import ModalWindow from "../../ModalWindow/ModalWindow";
 import classes from './CalendarItem.module.css';
 
 interface InterfaceEventItem {
@@ -8,15 +15,12 @@ interface InterfaceEventItem {
     image: string;
     title: string;
     description: string;
-    removeEvent: (event: any) => any;
 }
 
 const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
-    const {id, image, title, description, removeEvent} = props;
-
-    function limitStr(str: string, wordCount: number) {
-        return str.split(' ').slice(0, wordCount).join(' ') + '...';
-    }
+    const {id, image, title, description} = props;
+    const dispatch = useDispatch();
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     return (
         <div className={classes.card}>
@@ -28,18 +32,43 @@ const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
                 </div>
             </div>
             <div>
-                <div className={classes.card__text__action}>
-                    <p onClick={removeEvent}>Удалить</p>
-                    <DeleteOutlined className={classes.card__delete__icon} onClick={removeEvent}/>
+                <div className={classes.card__action}>
+                    <p onClick={showModal}>Удалить</p>
+                    <DeleteOutlined className={classes.card__delete} onClick={showModal}/>
                 </div>
-                <div className={classes.card__text__action}>
+                <div className={classes.card__action}>
                     <Link to={`/events-calendar/events/${(id)}`}>
                         <p>Перейти на страницу</p>
                     </Link>
                 </div>
             </div>
+            <ModalWindow title={false} isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleCancel}>
+                <p style={{fontWeight: 700}}>
+                    <span style={{
+                        color: '#FAAD14',
+                        marginRight: '16px',
+                        fontSize: '18px'
+                    }}>
+                        <ExclamationCircleOutlined/>
+                    </span>
+                    Вы уверены, что хотите отказаться?
+                </p>
+            </ModalWindow>
         </div>
     )
+
+    function showModal() {
+        setIsModalVisible(true);
+    }
+
+    function handleOk() {
+        setIsModalVisible(false);
+        dispatch(deleteEvent(id));
+    }
+
+    function handleCancel() {
+        setIsModalVisible(false);
+    }
 }
 
 export default CalendarItem;
