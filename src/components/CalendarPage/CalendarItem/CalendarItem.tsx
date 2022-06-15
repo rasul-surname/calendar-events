@@ -33,7 +33,7 @@ const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
                     <DeleteOutlined className={classes.card__delete__icon} onClick={removeEvent}/>
                 </div>
                 <div className={classes.card__text__action}>
-                    <Link to={`/events/${(id)}`}>
+                    <Link to={`/events-calendar/events/${(id)}`}>
                         <p>Перейти на страницу</p>
                     </Link>
                 </div>

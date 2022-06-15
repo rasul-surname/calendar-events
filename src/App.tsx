@@ -12,9 +12,9 @@ function App() {
             <div className="content">
                 <Header/>
                 <Routes>
-                    <Route path="/events" element={<EventsPage/>}/>
-                    <Route path="/calendar" element={<CalendarPage/>}/>
-                    <Route path="/events/:id" element={<SelectedPage/>}/>
+                    <Route path="/events-calendar" element={<EventsPage/>}/>
+                    <Route path="/events-calendar/calendar" element={<CalendarPage/>}/>
+                    <Route path="/events-calendar/events/:id" element={<SelectedPage/>}/>
                 </Routes>
             </div>
         </div>

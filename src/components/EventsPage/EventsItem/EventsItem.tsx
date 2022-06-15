@@ -17,7 +17,7 @@ const EventsItem: React.FC<InterfaceCalendarItem> = (props) => {
         <div className={classes.card}>
             <div>
                 <p className={classes.card__text__title}>{title}</p>
-                <Link to={`/events/${(id)}`}>
+                <Link to={`/events-calendar/events/${(id)}`}>
                     <p className={classes.card__text__more}>Больше</p>
                 </Link>
             </div>

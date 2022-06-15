@@ -11,14 +11,14 @@ const Header = () => {
     return (
         <header className={classes.wrapper}>
             <NavLink
-                to="/events"
+                to="/events-calendar"
                 className={({isActive}) => isActive ? classes.link + ' ' + classes.active : classes.link}
             >
                 <AppstoreOutlined/>
                 <span>События</span>
             </NavLink>
             <NavLink
-                to="/calendar"
+                to="/events-calendar/calendar"
                 className={({isActive}) => isActive ? classes.link + ' ' + classes.active : classes.link}
             >
                 <CalendarOutlined/>
