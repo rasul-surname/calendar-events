@@ -2,7 +2,7 @@
   "name": "calendar-events",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://rasul-surname.github.io/events-calendar/events/",
+  "homepage": "https://rasul-surname.github.io/events-calendar/",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.16.4",

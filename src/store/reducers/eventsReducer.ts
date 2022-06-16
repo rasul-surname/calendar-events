@@ -14,6 +14,7 @@ const initialState: EventsState = {
     allRecordedEvents: [],
     recordedEvents: [],
     recordedEventsID: [],
+    loading: false,
 }
 
 export const eventsReducer = (state = initialState, action: EventsAction): EventsState => {
@@ -27,6 +28,7 @@ export const eventsReducer = (state = initialState, action: EventsAction): Event
                 ...state,
                 allListEvents: convertedPayload,
                 visibleEvents: convertedPayload,
+                loading: false
             };
 
         case EventsActionTypes.ADD_EVENTS:
@@ -87,6 +89,11 @@ export const eventsReducer = (state = initialState, action: EventsAction): Event
                 allRecordedEvents: filterRecorderEvents
             }
 
+        case EventsActionTypes.GET_EVENTS_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
         default:
             return state;
     }
