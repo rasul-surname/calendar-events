@@ -1,16 +1,19 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../store/hooks/useTypedSelector";
 import {fetchEvents} from "../../store/action-creators/events";
 
+import {Spin} from "antd";
+import {WarningOutlined} from "@ant-design/icons/lib";
+
 import SelectedFilter from "../SelectedFitler/SelectedFilter";
-import Loader from "../Loader/Loader";
+import PageInfo from "../PageInfo/PageInfo";
 import EventsItem from "./EventsItem/EventsItem";
 import classes from './EventsPage.module.css';
 
 const EventsPage = () => {
-    const {visibleEvents, allListEvents, loading} = useTypedSelector(state => state.events);
+    const {visibleEvents, allListEvents, loading, error} = useTypedSelector(state => state.events);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -21,21 +24,28 @@ const EventsPage = () => {
         <div className={classes.wrapper}>
             <SelectedFilter/>
             {loading ?
-                <Loader/>
+                <PageInfo>
+                    <Spin size="large"/> загрузка...
+                </PageInfo>
                 :
-                <div className={classes.cards}>
-                    {visibleEvents.map(event => {
-                        return (
-                            <EventsItem
-                                key={event.id}
-                                id={event.id}
-                                title={event.title}
-                                image={event.image}
-                                date={event.date}
-                            />
-                        )
-                    })}
-                </div>
+                error ?
+                    <PageInfo>
+                        <WarningOutlined/> {error}
+                    </PageInfo>
+                    :
+                    <div className={classes.cards}>
+                        {visibleEvents.map(event => {
+                            return (
+                                <EventsItem
+                                    key={event.id}
+                                    id={event.id}
+                                    title={event.title}
+                                    image={event.image}
+                                    date={event.date}
+                                />
+                            )
+                        })}
+                    </div>
             }
         </div>
     )

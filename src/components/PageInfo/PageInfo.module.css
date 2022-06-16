@@ -1,8 +1,9 @@
-.loader {
+.wrapper {
     width: 100%;
     min-height: 30vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

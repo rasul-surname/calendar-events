@@ -15,6 +15,7 @@ const initialState: EventsState = {
     recordedEvents: [],
     recordedEventsID: [],
     loading: false,
+    error: null,
 }
 
 export const eventsReducer = (state = initialState, action: EventsAction): EventsState => {
@@ -93,6 +94,12 @@ export const eventsReducer = (state = initialState, action: EventsAction): Event
             return {
                 ...state,
                 loading: true
+            }
+        case EventsActionTypes.GET_EVENTS_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
             }
         default:
             return state;

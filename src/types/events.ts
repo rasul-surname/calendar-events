@@ -6,6 +6,7 @@ export interface EventsState {
     recordedEvents: { id: number, date: string, title: string, description: string, image: string, name: string, surname: string }[];
     recordedEventsID: number[];
     loading: boolean;
+    error: null | string;
 }
 
 export enum EventsActionTypes {
@@ -17,6 +18,7 @@ export enum EventsActionTypes {
     SIGN_UP_EVENT = "SIGN_UP_EVENT",
     LOG_OUT_EVENT = "LOG_OUT_EVENT",
     GET_EVENTS_LOADING = 'GET_EVENTS_LOADING',
+    GET_EVENTS_ERROR = 'GET_EVENTS_ERROR',
 }
 
 interface FetchEventsAction {
@@ -56,6 +58,11 @@ interface GetEventsLoading {
     type: EventsActionTypes.GET_EVENTS_LOADING,
 }
 
+interface GetEventsError {
+    type: EventsActionTypes.GET_EVENTS_ERROR,
+    payload: null | string,
+}
+
 export type EventsAction =
     FetchEventsAction
     | AddEventsAction
@@ -64,4 +71,5 @@ export type EventsAction =
     | ShowAllEventsAction
     | SignUpEventsAction
     | LogOutEventsAction
-    | GetEventsLoading;
+    | GetEventsLoading
+    | GetEventsError;

@@ -4,14 +4,18 @@ import axios from "axios";
 
 export const fetchEvents = (): any => {
     return async (dispatch: Dispatch<EventsAction>) => {
-        dispatch({type: EventsActionTypes.GET_EVENTS_LOADING});
+        try {
+            dispatch({type: EventsActionTypes.GET_EVENTS_LOADING});
 
-        const response = await axios.get('https://run.mocky.io/v3/49b8fbae-13e6-4aac-a8d1-644e3881cc62');
+            const response = await axios.get('https://run.mocky.io/v3/49b8fbae-13e6-4aac-a8d1-644e3881cc62');
 
-        // искусственная задержка для имитации работы сервера
-        setTimeout(() => {
-            dispatch({type: EventsActionTypes.FETCH_EVENTS, payload: response.data});
-        }, 2000);
+            // искусственная задержка для имитации работы сервера
+            setTimeout(() => {
+                dispatch({type: EventsActionTypes.FETCH_EVENTS, payload: response.data});
+            }, 2000);
+        } catch (e) {
+            dispatch({type: EventsActionTypes.GET_EVENTS_ERROR, payload: 'ошибка'});
+        }
     }
 }
 
