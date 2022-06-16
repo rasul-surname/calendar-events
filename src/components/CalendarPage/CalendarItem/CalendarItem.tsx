@@ -5,9 +5,9 @@ import {Link} from "react-router-dom";
 import {deleteEvent} from "../../../store/action-creators/events";
 import {limitStr} from "../../../utils/limitStr";
 
-import {DeleteOutlined, ExclamationCircleOutlined} from "@ant-design/icons/lib";
+import {DeleteOutlined} from "@ant-design/icons/lib";
 
-import ModalWindow from "../../ModalWindow/ModalWindow";
+import ConfirmWindow from "../../ConfirmWindow/ConfirmWindow";
 import classes from './CalendarItem.module.css';
 
 interface InterfaceEventItem {
@@ -42,18 +42,12 @@ const CalendarItem: React.FC<InterfaceEventItem> = (props) => {
                     </Link>
                 </div>
             </div>
-            <ModalWindow title={false} isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleCancel}>
-                <p style={{fontWeight: 700}}>
-                    <span style={{
-                        color: '#FAAD14',
-                        marginRight: '16px',
-                        fontSize: '18px'
-                    }}>
-                        <ExclamationCircleOutlined/>
-                    </span>
-                    Вы уверены, что хотите отказаться?
-                </p>
-            </ModalWindow>
+            <ConfirmWindow
+                isModalVisible={isModalVisible}
+                handleOk={handleOk}
+                handleCancel={handleCancel}
+                children="Вы уверены, что хотите отказаться?"
+            />
         </div>
     )
 

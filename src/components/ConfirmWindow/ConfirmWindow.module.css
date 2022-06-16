@@ -1,0 +1,10 @@
+.modal__warning {
+    font-weight: 700;
+}
+
+.modal__warning span {
+    color: #FAAD14;
+    margin-right: 16px;
+    font-size: 18px;
+}
+

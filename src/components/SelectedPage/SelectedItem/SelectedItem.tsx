@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {limitStr} from "../../../utils/limitStr";
 
 import {Button} from "antd";
-import {ExclamationCircleOutlined, RightOutlined} from "@ant-design/icons/lib";
+import {RightOutlined} from "@ant-design/icons/lib";
 
+import useInput from "../../../store/hooks/useInput";
+import ConfirmWindow from "../../ConfirmWindow/ConfirmWindow";
 import ModalWindow from "../../ModalWindow/ModalWindow";
 import classes from './SelectedItem.module.css';
 
@@ -24,8 +26,8 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
     const {id, image, title, date, description, name, surname, subscribeEvent, unSubscribeEvent, recorderEventsID} = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const firstName = useInput("");
+    const lastName = useInput("");
     const [inputError, setInputError] = useState("");
 
     return (
@@ -64,23 +66,12 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
             </div>
             {recorderEventsID.includes(+id)
                 ?
-                <ModalWindow
-                    title={false}
+                <ConfirmWindow
                     isModalVisible={isModalVisible}
                     handleOk={handleOk}
                     handleCancel={handleCancel}
-                >
-                    <p style={{fontWeight: 700}}>
-                        <span style={{
-                            color: '#FAAD14',
-                            marginRight: '16px',
-                            fontSize: '18px'
-                        }}>
-                            <ExclamationCircleOutlined/>
-                        </span>
-                        Вы уверены, что хотите отписаться?
-                    </p>
-                </ModalWindow>
+                    children="Вы уверены, что хотите отписаться?"
+                />
                 :
                 <ModalWindow
                     title="Записаться на событие"
@@ -98,20 +89,8 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
                         </div>
                         <form className={classes.modal__form}>
                             {inputError && <div style={{color: 'red', opacity: '0.8'}}>{inputError}</div>}
-                            <input
-                                name="name"
-                                type="text"
-                                placeholder="Имя"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                            <input
-                                name="surname"
-                                type="text"
-                                placeholder="Фамилия"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
+                            <input {...firstName} type="text" name="firstName" placeholder="Имя"/>
+                            <input {...lastName} type="text" name="lastName" placeholder="Фамилия"/>
                         </form>
                     </>
                 </ModalWindow>
@@ -130,13 +109,15 @@ const SelectedItem: React.FC<InterfaceSelectedItem> = (props) => {
             setIsModalVisible(false);
 
             // если не подписанны => проверяем на валидность
-        } else if (recorderEventsID.includes(+id) == false && (firstName.length < 2 || lastName.length < 2)) {
+        } else if (recorderEventsID.includes(+id) == false && (firstName.value.length < 2 || lastName.value.length < 2)) {
             setInputError("Поля должны содержать минимум по 2 символа");
 
             // если не подписанны и прошли проверку => делаем подписку и закрываем окно
         } else {
-            subscribeEvent(+id, firstName, lastName);
+            subscribeEvent(+id, firstName.value, lastName.value);
             setIsModalVisible(false);
+            firstName.onChangeValue("");
+            lastName.onChangeValue("");
         }
     }
 
