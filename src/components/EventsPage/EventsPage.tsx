@@ -30,7 +30,7 @@ const EventsPage = () => {
                 :
                 error ?
                     <PageInfo>
-                        <WarningOutlined/> {error}
+                        <WarningOutlined/> 404 - {error}
                     </PageInfo>
                     :
                     <div className={classes.cards}>
