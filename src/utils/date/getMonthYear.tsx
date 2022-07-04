@@ -1,5 +1,9 @@
 export function getMonthYear(date: string): string {
     let arrDates = date.split(".");
-    arrDates.shift();
-    return arrDates.join('.');
+    if(arrDates.length === 3) {
+        arrDates.shift();
+        return arrDates.join('.');
+    }
+
+    return date;
 }
